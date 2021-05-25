@@ -3,6 +3,7 @@ package cl.inacap.registroWeb.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.inacap.registroModel.dao.IngresoSolicitudDAO;
+import cl.inacap.registroModel.dao.IngresoSolicitudDAOLocal;
 import cl.inacap.registroModel.dto.IngresoSolicitud;
 
 /**
@@ -20,8 +21,9 @@ import cl.inacap.registroModel.dto.IngresoSolicitud;
 @WebServlet("/IngresarSolicitudController.do")
 public class IngresarSolicitudController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private AtomicInteger incremental= new AtomicInteger(0);
     @Inject
-    private IngresoSolicitudDAO ingresoSolicitudDAO;
+    private IngresoSolicitudDAOLocal ingresoSolicitudDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -49,25 +51,28 @@ public class IngresarSolicitudController extends HttpServlet {
 				errores.add("debe ingresar un rut");
 			}
 			String nombre = request.getParameter("nombre-txt").trim();
-			if(errores.isEmpty()) {
+			if(nombre.isEmpty()) {
 				errores.add("debe ingresar un nombre");
 			}
-			String tipo = request.getParameter("tipo-txt").trim();
-			if (tipo.isEmpty()) {
+			String tipoSolicitud = request.getParameter("tipo-txt").trim();
+			if (tipoSolicitud.isEmpty()) {
 				errores.add("debe seleccionar solicitud");
 			}
 			if(errores.isEmpty()) {
-				IngresoSolicitud solicitud = new IngresoSolicitud();
-				solicitud.setRutCliente(rut);
-				solicitud.setNombreCliente(nombre);
-				solicitud.setTipoSolicitud(tipo);
-				ingresoSolicitudDAO.save(solicitud);
-				//int numSolicitud=incremental.getAndIncrement();
-				//solicitud.setNumSolicitud(numSolicitud);
-				//IngresoSolicitudDAO.save(solicitud);
-				//request.setAttribute("mensaje", "solicitud Registro");
+				IngresoSolicitud registro=new IngresoSolicitud();
+				registro.setNombre(nombre);
+				registro.setRut(rut);
+				registro.setTipoSolicitud(tipoSolicitud);
+				int numSolicitado=incremental.getAndIncrement();
+				registro.setNumSolicitado(numSolicitado);
+				ingresoSolicitudDAO.save(registro);
+				request.setAttribute("mensaje", "Solicitud Registrada");
+				
+			}else {
+				request.setAttribute("errores", errores);
 				
 			}
+			doGet(request, response);
 		}
 		
 	}

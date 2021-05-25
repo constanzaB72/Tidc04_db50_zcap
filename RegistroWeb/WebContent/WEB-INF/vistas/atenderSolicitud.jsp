@@ -19,17 +19,22 @@
 					<div class="card-content">
 						<div class="field">
 							<label class="label">Tipo de Solicitud</label>
-							<div class="control">
-								<div class="select">
-									<select>
-										<option>Seleccionar</option>
-									</select>
+								<div class="control">
+									<div class="select">
+										<select>
+											<option>Seleccionar</option>
+											<option>Solicitud de Cédula de Indentidad</option>
+											<option>Retiro de Cédula de Identidad</option>
+											<option>Solicitud de Certificado de Nacimiento</option>
+											<option>Solicitud de Certificado de Defunción</option>
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="field">
+						<div class="field ">
 							<div class="control">
-								<button class="button is-primary is-outlined ">Filtrar</button>
+								<button class="button is-primary is-outlined">Filtrar</button>
 							</div>
 						</div>
 						<div class="field">
@@ -43,12 +48,16 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:forEach var="solicitud" items="${solicitudes}">
 									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td><a href="" class="has-text-danger">Atender</a></td>
+										<td>${solicitud.numSolicitado}</td>
+										<td>${solicitud.nombre}</td>
+										<td>${solicitud.tipoSolicitud}</td>
+										<td><a  href="AtenderSolicitudesController.do?numEliminar=${solicitud.numSolicitado}" 
+										      class="has-text-danger">Atender</a></td>
+										
 									</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 							</div>
@@ -56,6 +65,5 @@
 					</div>
 				</div>
 			</div>
-		</div>
 </body>
 </html>

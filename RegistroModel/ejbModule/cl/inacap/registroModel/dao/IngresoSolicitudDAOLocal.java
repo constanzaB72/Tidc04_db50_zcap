@@ -8,9 +8,14 @@ import cl.inacap.registroModel.dto.IngresoSolicitud;
 
 @Local
 public interface IngresoSolicitudDAOLocal {
-   void save(IngresoSolicitud Solicitud);
-   List  <IngresoSolicitud> getAll();
-   void delete(IngresoSolicitud Solicitud);
-   List <IngresoSolicitud> filterByName(String TipoSolicitud);
-   
+	void save(IngresoSolicitud Solicitud);
+
+	List<IngresoSolicitud> getAll();
+
+	void delete(IngresoSolicitud Solicitud);
+
+	IngresoSolicitud findByNumber(int numSolicitado);
+
+	List<IngresoSolicitud> filterByName(String TipoSolicitud);
+
 }

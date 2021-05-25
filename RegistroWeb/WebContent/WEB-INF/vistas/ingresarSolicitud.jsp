@@ -2,53 +2,67 @@
 	pageEncoding="ISO-8859-1"%>
 <jsp:include page="../templates/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<body>
+
 	<main class="container mt-6">
 		<!-- mensaje de error -->
 		<c:if test="${mensaje !=null }">
 			<div class="columns is-centered">
-				<div class="column is-8">
+				<div class="column is-6">
 					<div class="notification is-primary">
 						<p>${mensaje}</p>
 					</div>
 				</div>
 			</div>
 		</c:if>
+		<c:if test="${errores !=null}">
+			<div class="columns is-centered mb-6">
+				<div class="column is-6">
+					<div class="notification is-primary">
+						<h6>Existen errores en el Formulario</h6>
+						<div class="content">
+							<ul>
+								<c:forEach var="error" items="${errores}">
+									<li>${error}</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
+
 		<!-- formulario -->
-		<div class="container">
 			<div class="columns is-centered">
 				<div class="column is-8 ">
-					<form action="IngresarSolicitudController.do" method="post"></form>
+					<form action="IngresarSolicitudController.do" method="POST">
 					<div class="card">
 						<div class="card-header has-background-primary">
 							<span class="card-header-title">Ingreso de Solicitudes</span>
 						</div>
 						<div class="card-content">
 							<div class="field">
-								<label class="label">Nombre Cliente</label>
+								<label class="label" for="nombre-txt">Nombre Cliente</label>
 								<div class="control">
-									<input class="input is-primary" type="text">
+									<input class="input" type="text" name="nombre-txt"
+										id="nombre-txt">
 								</div>
 							</div>
 
 							<div class="field">
-								<label class="label">Rut Cliente</label>
-								<div class="">
-									<input class="input is-primary" type="text"
-										placeholder="25.365.159-4"> <span
-										class="icon is-small is-left"> <i class="fas fa-user"></i>
-									</span> <span class="icon is-small is-right"> <i
-										class="fas fa-check"></i>
-									</span>
+								<label class="label" for="rut-txt">Rut Cliente</label>
+								<div class="control">
+									<input class="input" type="text" placeholder="25.365.159-4"
+										name="rut-txt" id="rut-txt"> 
 								</div>
 							</div>
 
 
 							<div class="field">
-								<label class="label">Tipo de Solicitud</label>
+								<label class="label" for="tipo-txt">Tipo de Solicitud</label>
 								<div class="control">
 									<div class="select">
-										<select>
+										<select name="tipo-txt" id="tipo-txt">
 											<option>Seleccionar</option>
 											<option>Solicitud de Cédula de Indentidad</option>
 											<option>Retiro de Cédula de Identidad</option>
@@ -58,20 +72,25 @@
 									</div>
 								</div>
 							</div>
+							<div class="field">
+								<label class="label" for="NumSolicitud-txt">Numero de Solicitud</label>
+								<div class="control">
+									<input class="input" type="text" placeholder="0000" name="NumSolicutud-txt"
+										id="NumSolicitud-txt">
+								</div>
+							</div>
 
 							<div class="card-footer">
-								<div class="field">
-									<div class="control">
-										<button class="button is-primary is-outlined ">Ingresar
-											Solicitud</button>
-									</div>
-								</div>
+
+								<button type="submit" class="button is-primary is-outlined ">Ingresar
+									Solicitud</button>
+
 							</div>
 						</div>
 					</div>
+				</form>
 				</div>
 			</div>
-		</div>
 	</main>
-</body>
+</tbody>
 </html>

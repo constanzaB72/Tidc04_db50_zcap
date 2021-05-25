@@ -19,7 +19,7 @@ public class IngresoSolicitudDAO implements IngresoSolicitudDAOLocal {
 	@Override
 	public void save(IngresoSolicitud solicitud) {
 		solicitudes.add(solicitud);
-		System.out.println("cantidad de solicitudes registradas"+solicitudes.size());
+        System.out.println("cantidad de solicitudes registradas"+solicitudes.size());
 	}
 
 	@Override
@@ -37,6 +37,15 @@ public class IngresoSolicitudDAO implements IngresoSolicitudDAOLocal {
 	@Override
 	public List<IngresoSolicitud> filterByName(String TipoSolicitud) {
 	return solicitudes.stream().filter(s -> s.getTipoSolicitud().contains(TipoSolicitud)).collect(Collectors.toList());
+	}
+
+	@Override
+	public IngresoSolicitud findByNumber(int numSolicitado) {
+		for(IngresoSolicitud solicitud:solicitudes) {
+			if(solicitud.getNumSolicitado()==numSolicitado);
+			return solicitud;
+		}
+		return null;
 	}
 
 
